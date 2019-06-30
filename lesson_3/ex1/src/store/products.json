@@ -1,0 +1,6 @@
+[
+    { "id": "1","name": "tomato","categoryId": "1","itemsInStock": 6},
+    { "id": "2","name": "potato","categoryId": "1","itemsInStock": 12},
+    { "id": "3","name": "orange","categoryId": "2","itemsInStock": 5},
+    { "id": "4","name": "banana","categoryId": "2","itemsInStock": 9}
+]

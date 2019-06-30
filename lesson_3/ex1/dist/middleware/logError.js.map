@@ -1,0 +1,1 @@
+{"version":3,"file":"logError.js","sourceRoot":"","sources":["../../src/middleware/logError.ts"],"names":[],"mappings":";;AAEA,SAAgB,QAAQ,CAAC,KAAY,EAAE,GAAY,EAAE,GAAa,EAAE,IAAkB;IACpF,uCAAuC;IACvC,OAAO,CAAC,GAAG,CAAC,sBAAsB,CAAC,CAAC;IACpC,IAAI,CAAC,KAAK,CAAC,CAAC;AACd,CAAC;AAJD,4BAIC"}
