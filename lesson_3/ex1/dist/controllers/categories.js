@@ -28,31 +28,17 @@ const loadProducts = store_1.store.loadProducts;
 const router = express_1.default.Router();
 exports.router = router;
 router.get('/', categoriesRoutes.getAll);
-router.get('/:id/products', async_1.wrapAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+router.get('/:id/products', products_validation_1.validateGetProducts, async_1.wrapAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
     // TODO: finding existing project repeats in multiple routes, can reuse via multiple route handlers (using 'res.locals')
     const id = req.params.id;
     const existing = (yield loadProducts()).filter(p => p.categoryId === id);
-    if (!existing) {
-        // TODO: sending 404 if existing is not found repeats in other routes, can reuse via multiple route handlers
-        res.sendStatus(404);
-        return;
-    }
     res.send(existing);
 })));
 // TODO: route handlers should be in a separate module (e.g. src/routes/projects)
-router.get('/:id', async_1.wrapAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+router.get('/:id', products_validation_1.validateGet, async_1.wrapAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
     // TODO: finding existing project repeats in multiple routes, can reuse via multiple route handlers (using 'res.locals')
     const id = req.params.id;
     const existing = (yield loadCategories()).find(p => p.id === id);
-    if (isNaN(id)) {
-        res.sendStatus(404);
-        return;
-    }
-    else if (!existing) {
-        // TODO: sending 404 if existing is not found repeats in other routes, can reuse via multiple route handlers
-        res.sendStatus(400);
-        return;
-    }
     res.send(existing);
 })));
 router.post('/', (req, res) => {
@@ -62,7 +48,7 @@ router.post('/', (req, res) => {
     categories.push(category);
     res.status(201).send(category);
 });
-router.put('/:id', products_validation_1.validateProduct, (req, res) => {
+router.put('/:id', products_validation_1.validatePut, (req, res) => {
     const id = req.params.id;
     const categories = store_1.store.categories;
     const existing = categories.find(p => p.id === id);
@@ -71,18 +57,10 @@ router.put('/:id', products_validation_1.validateProduct, (req, res) => {
     Object.assign(existing, category);
     res.send(category);
 });
-router.delete('/:id', (req, res) => {
+router.delete('/:id', products_validation_1.validateDelete, (req, res) => {
     const categories = store_1.store.categories;
     const id = req.params.id;
     const existingIndex = categories.findIndex(p => p.id === id);
-    if (isNaN(id)) {
-        res.sendStatus(400);
-        return;
-    }
-    if (existingIndex < 0) {
-        res.sendStatus(404);
-        return;
-    }
     categories.splice(existingIndex, 1);
     res.sendStatus(204);
 });
